@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+</head>
+
+<body>
+    <h1>Task List</h1>
+
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}!</p>
+    <a href="{% url 'task-create' %}">Create New Task</a>
+    <a href="{% url 'account_logout' %}">Logout</a>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <strong>{{ task.title }}</strong>: {{ task.description }}
+            <a href="{% url 'task-update' task.id %}">Edit</a>
+            <a href="{% url 'task-delete' task.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>You are not logged in.</p>
+    <a href="{% url 'account_login' %}">Login with Google</a> {% endif %}
+</body>
+
+</html>
